@@ -1,10 +1,13 @@
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
   return (
     <View style={styles.container}>
-      <Text>Hello world</Text>
+      <Pressable
+        className="button" onPress={()=>router.push("./register")} >
+          <Text className="text">Register</Text>
+        </Pressable>
       <Link href={"/custdetails"} style={styles.button}>View Customer</Link>
     </View>
   );
