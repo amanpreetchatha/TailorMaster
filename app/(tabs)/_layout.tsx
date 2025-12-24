@@ -26,6 +26,7 @@ export default function TabsLayout() {
     }} 
     />
       <Tabs.Screen name="custdetails" options={{headerTitle: "Customer Details"}}/>
+      
     </Tabs>
   )
 }

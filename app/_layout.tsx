@@ -9,7 +9,8 @@ export default function RootLayout() {
     <>
       <StatusBar style="light" />
       <Stack>
-        <Stack.Screen name="(tabs)" options={{headerShown: false}} />
+        <Stack.Screen name="index" options={{headerTitle: "Tailor Master", headerLeft: ()=>null}}/>
+        <Stack.Screen name="register" options={{headerTitle: "Register"}}/>
       </Stack>
     </>
   )
