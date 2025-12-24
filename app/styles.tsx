@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#333",
     color: "#fff",
@@ -19,6 +19,8 @@ export const styles = StyleSheet.create({
     color: "#000"
   },
   heading: {
+    marginTop: 50,
+    margin: 10,
     fontWeight: 600,
     fontSize: 30,
     color: "#fff"    
@@ -30,5 +32,10 @@ export const styles = StyleSheet.create({
     padding: 10,
     fontWeight: 800,
     color: "#aaa"
+  },
+  welcome: {
+    color: "#fff",
+    alignSelf: "flex-end",
+    marginBottom: 50
   }
 });
