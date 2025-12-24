@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, View } from "react-native";
-
+import {styles} from "./styles";
 export default function Index() {
   const router=useRouter();
   return (
@@ -11,19 +11,3 @@ export default function Index() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  button:{
-    backgroundColor: "#aa3",
-    padding: 10,
-    margin: 10,
-    borderRadius: 16,
-    width: 150,
-    textAlign: "center"
-  }
-});

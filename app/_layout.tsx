@@ -11,6 +11,7 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="index" options={{headerTitle: "Tailor Master", headerLeft: ()=>null}}/>
         <Stack.Screen name="register" options={{headerTitle: "Register"}}/>
+        <Stack.Screen name="login" options={{headerTitle: "Login"}}/>
       </Stack>
     </>
   )

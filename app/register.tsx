@@ -2,9 +2,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Pressable, Text, TextInput, View } from 'react-native';
 import * as yup from 'yup';
-
+import {styles} from './styles'
 
 const schema = yup.object().shape({
     name: yup
@@ -37,11 +37,11 @@ const RegisterForm = () =>{
 
     }
     return (
-        <View>
-            <Text>Create Account</Text>
+        <View style={styles.container}>
+            <Text style={styles.heading}>Create Account</Text>
             <Controller control={control} name="name" render={({field:{onChange,onBlur,value}})=>
                 <>
-                <TextInput placeholder = 'Enter full name' placeholderTextColor="#a0aec0"
+                <TextInput style={styles.inputField} placeholder = 'Enter full name' placeholderTextColor="#a0aec0"
                     onBlur={()=>{
                         onBlur() ;
                         trigger('name');
@@ -61,7 +61,7 @@ const RegisterForm = () =>{
             } />
             <Controller control={control} name="email" render={({field:{onChange,onBlur,value}})=>
                 <>
-                <TextInput placeholder = 'Enter your email' placeholderTextColor="#a0aec0"
+                <TextInput style={styles.inputField} placeholder = 'Enter your email' placeholderTextColor="#a0aec0"
                     onBlur={()=>{
                         onBlur() ;
                         trigger('email');
@@ -83,7 +83,7 @@ const RegisterForm = () =>{
             } />
             <Controller control={control} name="password" render={({field:{onChange,onBlur,value}})=>
                 <>
-                <TextInput placeholder = 'Enter password' placeholderTextColor="#a0aec0"
+                <TextInput style={styles.inputField} placeholder = 'Enter password' placeholderTextColor="#a0aec0"
                     onBlur={()=>{
                         onBlur() ;
                         trigger('password');
@@ -105,7 +105,7 @@ const RegisterForm = () =>{
             } />
             <Controller control={control} name="confirmPassword" render={({field:{onChange,onBlur,value}})=>
                 <>
-                <TextInput placeholder = 'Re-enter password' placeholderTextColor="#a0aec0"
+                <TextInput style={styles.inputField} placeholder = 'Re-enter password' placeholderTextColor="#a0aec0"
                     onBlur={()=>{
                         onBlur() ;
                         trigger('confirmPassword');
@@ -125,8 +125,7 @@ const RegisterForm = () =>{
                 }
                 </>
             } />
-            <Pressable onPress={handleSubmit(onSubmit)}>Register</Pressable>
-            <Pressable onPress={()=>{router.push('/')}}>Home</Pressable>
+            <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>Register</Pressable>
         </View>
     )
 }

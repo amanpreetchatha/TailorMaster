@@ -1,0 +1,6 @@
+1. Tailor signup and login
+2. when a tailor logs in, view a list of actions
+3. Actions: orders, customers, profile settings
+4. Pending orders: show a list of active orders and options to search, filter, sort, add, delete and modify orders
+5. Customers: show a list of customers with full name and phone number. upon clicking a particular customer view customer details which includes all the measurements and a note that were recorded by the tailor when the customer was initially added.
+on customer screen add option to add modify and delete customer details
