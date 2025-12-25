@@ -1,10 +1,20 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Link } from 'expo-router';
-import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
+import { Button, Input } from 'react-native-elements';
 import * as yup from 'yup';
-import {styles} from './styles'
+import styles from './styles';
+
+import { Alert, AppState } from 'react-native';
+import { supabase } from './../utils/supabase';
+
+AppState.addEventListener('change', (state) => {
+  if (state === 'active') {
+    supabase.auth.startAutoRefresh()
+  } else {
+    supabase.auth.stopAutoRefresh()
+  }
+})
+
 
 const schema = yup.object().shape({
     email: yup
@@ -17,64 +27,54 @@ const schema = yup.object().shape({
     .min(6,'Password must be at least 6 characters long'),
 });
 
-const LoginForm = () =>{
-    const {control,handleSubmit,reset,formState: {errors},trigger} = useForm({
-        resolver: yupResolver(schema)
-    });
-    const onSubmit=(data: any)=>{
-        console.log(data);
-        alert('login success');
-        reset();
 
-    }
+const LoginForm = () =>{
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false);
+
+    
+    
+    async function signInWithEmail() {
+        setLoading(true)
+        const { error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
+        })
+        
+        if (error) Alert.alert(error.message)
+        setLoading(false)
+      }
+    
     return (
         <View style={styles.container}>
-            <Text style={styles.heading}>Login</Text>
-            <Controller control={control} name="email" render={({field:{onChange,onBlur,value}})=>
-                <>
-                <TextInput style={styles.inputField} placeholder = 'Enter your email' placeholderTextColor="#a0aec0"
-                    onBlur={()=>{
-                        onBlur() ;
-                        trigger('email');
-                    }}
-                    onChangeText={(text)=>{
-                        onChange(text);
-                        trigger('email');
-                    }}
-                    value = {value}
-                    keyboardType='email-address'
-                    autoCapitalize='none'
+            <View style={[styles.verticallySpaced, styles.mt20]}>
+                <Text style={styles.heading}>Login</Text>
+                <Input
+                    label="Email"
+                    leftIcon={{ type: 'font-awesome', name: 'envelope' }}
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
+                    placeholder="email@address.com"
+                    autoCapitalize={'none'}
                 />
-                {
-                    errors.email && (
-                        <Text>{errors.email?.message?.toString()}</Text>
-                    )
-                }
-                </>
-            } />
-            <Controller control={control} name="password" render={({field:{onChange,onBlur,value}})=>
-                <>
-                <TextInput style={styles.inputField} placeholder = 'Enter password' placeholderTextColor="#a0aec0"
-                    onBlur={()=>{
-                        onBlur() ;
-                        trigger('password');
-                    }}
-                    onChangeText={(text)=>{
-                        onChange(text);
-                        trigger('password');
-                    }}
-                    value = {value}
-                    secureTextEntry
-                    
+            </View>
+            <View style={styles.verticallySpaced}>
+                <Input
+                    label="Password"
+                    leftIcon={{ type: 'font-awesome', name: 'lock' }}
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
+                    secureTextEntry={true}
+                    placeholder="Password"
+                    autoCapitalize={'none'}
                 />
-                {
-                    errors.password?.message && (
-                        <Text>{errors.password.message.toString()}</Text>
-                    )
-                }
-                </>
-            } />
-            <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>Login</Pressable>
+            </View>
+            <View style={[styles.verticallySpaced, styles.mt20]}>
+                <Button title= "Login" onPress={()=>signInWithEmail()} disabled={loading}/>
+            </View>
+            
+            
         </View>
     )
 }
