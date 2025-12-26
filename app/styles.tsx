@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
   },
   welcome: {
-    color: "#fff",
+    color: "#333",
     alignSelf: "flex-end",
     marginBottom: 50
   },

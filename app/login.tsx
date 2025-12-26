@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
-import * as yup from 'yup';
 import styles from './styles';
 
 import { Alert, AppState } from 'react-native';
 import { supabase } from './../utils/supabase';
+import {useRouter} from 'expo-router';
 
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {
@@ -16,23 +16,11 @@ AppState.addEventListener('change', (state) => {
 })
 
 
-const schema = yup.object().shape({
-    email: yup
-    .string()
-    .required('Email is required')
-    .email('Please enter a valid email'),
-    password: yup
-    .string()
-    .required('Password is required')
-    .min(6,'Password must be at least 6 characters long'),
-});
-
-
 const LoginForm = () =>{
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false);
-
+    const router = useRouter();
     
     
     async function signInWithEmail() {
@@ -72,6 +60,9 @@ const LoginForm = () =>{
             </View>
             <View style={[styles.verticallySpaced, styles.mt20]}>
                 <Button title= "Login" onPress={()=>signInWithEmail()} disabled={loading}/>
+            </View>
+            <View style={[styles.verticallySpaced, styles.mt20]}>
+                <Button title= "Register" onPress={()=>router.push("/register")}/>
             </View>
             
             
