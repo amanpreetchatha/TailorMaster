@@ -9,6 +9,7 @@ import {useEffect, useState} from 'react';
 export default function Dashboard({ session }: { session: Session }) {
   const [loading, setLoading] = useState(false);
   const [fullName, setFullName] = useState('');
+  const router=useRouter();
 
   async function getName(){
     const {data, error, status} = await supabase.from('profiles').select('full_name').eq('id',session.user.id).single();
@@ -25,39 +26,11 @@ export default function Dashboard({ session }: { session: Session }) {
   });
 
   
-  async function getCustomerList(){
-    try {
-        // change this block of code so that it gets a list of customers from customer table in the database.
-          setLoading(true)
-          if (!session?.user) throw new Error('No user on the session!')
-    
-          const { data, error, status } = await supabase
-            .from('profiles')
-            .select(`full_name`)
-            .eq('id', session?.user.id)
-            .single()
-          if (error && status !== 406) {
-            throw error
-          }
-    
-          if (data) {
-            setFullName(data.full_name)
-            
-          }
-        } catch (error) {
-          if (error instanceof Error) {
-            Alert.alert(error.message)
-          }
-        } finally {
-          setLoading(false)
-        }
-
-  }
   return (
     <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome {fullName}</Text>
+        <Text style={[styles.welcome, styles.text]}>Welcome {fullName}</Text>
         <View style={styles.verticallySpaced}>
-          <Button title="Customer List" onPress={()=>(getCustomerList())} disabled={loading} />
+          <Button title="Customer List" onPress={()=>router.push("/customer-list")} disabled={loading} />
         </View>
         <View style={styles.verticallySpaced}>
           <Button title="Log Out" onPress={() => supabase.auth.signOut()} />

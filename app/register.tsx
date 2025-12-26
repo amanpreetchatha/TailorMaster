@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+
 import React, { useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
@@ -8,7 +8,6 @@ import styles from './styles';
 
 
 const RegisterForm = () =>{
-    const router = useRouter();
     const [fullName,setFullName] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');

@@ -33,10 +33,15 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     alignSelf: 'stretch',
   },
-  
   mt20: {
     marginTop: 20,
   },
+  text:{
+    color: "#333",
+    fontWeight: 700,
+    fontSize: 18
+
+  }
 });
 
 
