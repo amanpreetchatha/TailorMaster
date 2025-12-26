@@ -1,16 +1,19 @@
 import { useRouter } from "expo-router";
 import { Pressable, View, Alert } from "react-native";
-import {Tab, Text, Button} from "react-native-elements"
+import {Tab, Text, Button, Input, ListItem} from "react-native-elements"
 import {useState} from 'react';
 import styles from "./styles";
 import { supabase } from '../utils/supabase'
 import { Session } from '@supabase/supabase-js'
+import TableList from "./components/TableList";
 
 export default function CustomerList({ session }: { session: Session }) {
   const router=useRouter();
   const username="user";
   const [loading,setLoading] = useState(false);
+  const [searchString, setSearchString] = useState('');
 
+  const userDetails={email: session?.user.email, phone: session?.user.phone}
 
 async function getCustomerList(){
     try {
@@ -46,14 +49,25 @@ async function getCustomerList(){
 
   return (
     <View style={styles.container}>
-      <View>
+      
         <View style={styles.verticallySpaced}>
           <Button title="Add Customer" onPress={()=>router.push("/add-customer")} disabled={loading} />
         </View>
-        
-        <Text style={[styles.mt20, styles.text]}>Search by: </Text>
+        <View>
+          <Input
+            style={styles.verticallySpaced}
+            leftIcon={{ type: 'font-awesome', name: 'search' }}
+            onChangeText={(text) => setSearchString(text)}
+            value={searchString}
+            placeholder="Search"
+          />
+          <TableList data={userDetails}>
 
-      </View>
+          </TableList>
+
+        </View>
+
+      
     </View>
   );
 }
