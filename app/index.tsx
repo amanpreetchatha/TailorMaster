@@ -20,6 +20,7 @@ import { View } from 'react-native'
 import { supabase } from '../utils/supabase'
 import LoginForm from './login'
 import Dashboard from './dashboard'
+import { DashboardContext } from './providers/context'
 
 
 
@@ -46,7 +47,9 @@ export default function App() {
     <View>
       {
         session && session.user ? 
-        <Dashboard key={session.user.id} session={session} /> :
+        ( <DashboardContext.Provider value={session.user}>
+          <Dashboard /> 
+        </DashboardContext.Provider>) :
         <LoginForm />
       }
     </View>
