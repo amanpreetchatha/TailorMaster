@@ -9,34 +9,20 @@ import CustomerList from "./customer-list";
 import { useUserContext } from "./providers/context";
 
 export default function Dashboard() {
-  const [loading, setLoading] = useState(false);
-  const [fullName, setFullName] = useState('');
   const router=useRouter();
   const user = useUserContext();
-
-  async function getName(){
-    const {data, error, status} = await supabase.from('profiles').select('full_name').eq('id',user.id).single();
-    if(error && status !== 406){
-      throw error;
-    }
-    if(data){
-      setFullName(data.full_name);
-    }
-  } 
-  useEffect(()=>{
-    getName();  
-
-  });
-
   
   return (
     <View style={styles.container}>
-        <Text style={[styles.welcome, styles.text]}>Welcome {fullName}</Text>
+        <Text style={[styles.welcome, styles.text]}>Welcome {user?.email}</Text>
         <View style={styles.verticallySpaced}>
-          <Button title="Customer List" onPress={()=>router.push('/customer-list')} disabled={loading} />
+          <Button title="Add Customer" onPress={()=>router.push('/add-customer')} />
         </View>
         <View style={styles.verticallySpaced}>
-          <Button title="Log Out" onPress={() => supabase.auth.signOut()} />
+          <Button title="Customer List" onPress={()=>router.push('/customer-list')} />
+        </View>
+        <View style={styles.verticallySpaced}>
+          <Button title="Log Out" onPress={() => {supabase.auth.signOut(); router.push('/login')}} />
         </View>
     </View>
   );

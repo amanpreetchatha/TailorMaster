@@ -16,11 +16,10 @@ const styles = StyleSheet.create({
     color: "#333"
   },
   inputField: {
-    borderWidth: 2,
     borderColor: "#aaa",
     margin: 10,
     padding: 10,
-    fontWeight: 800,
+    fontWeight: 500,
 
   },
   welcome: {
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
   },
   text:{
     color: "#333",
-    fontWeight: 700,
+    fontWeight: 500,
     fontSize: 18
 
   },

@@ -26,7 +26,7 @@ export default function CustomerList() {
             const { data, error, status } = await supabase
               .from('profiles')
               .select(`*`)
-              .eq('id', user.id)
+              .eq('id', user?.id)
               .single()
             if (error && status !== 406) {
               throw error
