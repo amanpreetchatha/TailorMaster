@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react';
 
 export const DashboardContext = createContext<User | undefined>(undefined);
 
-export function useUserContext(){
+export default function useUserContext(){
   const user = useContext(DashboardContext);
   
   if(user===undefined){

@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { Alert, View } from "react-native";
 import { Button, Input, Text } from "react-native-elements";
-import { useUserContext } from "./providers/context";
+import  useUserContext  from "./providers/context";
 import styles from "./styles";
 
 export default function AddCustomer(){

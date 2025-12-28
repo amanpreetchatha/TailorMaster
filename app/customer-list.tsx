@@ -1,19 +1,16 @@
 import { useRouter } from "expo-router";
-import { Pressable, View, Alert } from "react-native";
+import { Pressable, View, Alert, ScrollView, FlatList } from "react-native";
 import {Tab, Text, Button, Input, ListItem} from "react-native-elements"
 import {useState, useEffect} from 'react';
 import styles from "./styles";
 import { supabase } from '../utils/supabase'
-import { Session } from '@supabase/supabase-js'
-import TableList from "./components/TableList";
-import { useUserContext } from "./providers/context";
+
 
 export default function CustomerList() {
   const router=useRouter();
-  const username="user";
   const [loading,setLoading] = useState(false);
   const [searchString, setSearchString] = useState('');
-  const user=useUserContext();
+  let [receivedData, setReceivedData] = useState(undefined);
 
   useEffect(()=>{
     getCustomerList();
@@ -23,26 +20,20 @@ export default function CustomerList() {
           // change this block of code so that it gets a list of customers from customer table in the database.
             setLoading(true)
 
-            const { data, error, status } = await supabase
-              .from('profiles')
-              .select(`*`)
-              .eq('id', user?.id)
-              .single()
+            const { data, error, status } = await supabase.rpc('getAllCustomers');
+
             if (error && status !== 406) {
-              throw error
+              console.log(error.message)
             }
       
             if (data) {
-              //setFullName(data.full_name)
-  
-              //implement customer list logic here
-  
-              console.log("Response:",data);
+              setReceivedData(data);
+              console.log(receivedData);
               
             }
           } catch (error) {
             if (error instanceof Error) {
-              Alert.alert(error.message)
+              console.log(error.message)
             }
           } finally {
             setLoading(false);
@@ -50,24 +41,32 @@ export default function CustomerList() {
           }
   
     }
+    function renderList(){
+      return (
+        null
+        //implement listitem here
+      )
+    }
+  
   return (
     <View style={styles.container}>
       
         <View style={styles.verticallySpaced}>
-          <Button title="Add Customer" onPress={()=>router.push("/add-customer")} />
-        </View>
-        <View>
           <Input
-            style={styles.verticallySpaced}
             leftIcon={{ type: 'font-awesome', name: 'search' }}
             onChangeText={(text) => setSearchString(text)}
             value={searchString}
             placeholder="Search"
           />
-
+          <Button title="Search"></Button>
         </View>
-
-      
+        <View style={styles.verticallySpaced}>
+          
+            {renderList()}
+            
+            
+        </View>      
     </View>
+    
   );
 }

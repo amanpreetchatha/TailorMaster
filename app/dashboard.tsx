@@ -6,7 +6,7 @@ import { Button} from 'react-native-elements'
 import { supabase } from './../utils/supabase'
 import {useEffect, useState} from 'react';
 import CustomerList from "./customer-list";
-import { useUserContext } from "./providers/context";
+import  useUserContext  from "./providers/context";
 
 export default function Dashboard() {
   const router=useRouter();
