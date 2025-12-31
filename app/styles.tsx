@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     color: "#333",
     fontWeight: 500,
-    
+    borderWidth: 2,
     padding: 12,
   },
   heading: {
@@ -35,14 +35,32 @@ const styles = StyleSheet.create({
   mt20: {
     marginTop: 20,
   },
+  mb20:{
+    marginBottom: 50
+  },
   text:{
-    color: "#333",
-    fontWeight: 500,
+    color: "#222",
+    fontWeight: 700,
     fontSize: 18
 
   },
+  subText:{
+    color: "#222",
+    fontWeight: 700,
+    fontSize: 15
+  },
   list:{
     borderWidth: 1
+  },
+  listItem:{
+    backgroundColor: "#eee"
+  },
+  checkBox:{
+    backgroundColor: "opaque",
+    borderWidth: 0
+  },
+  measurements:{
+    width: 200
   }
 });
 
