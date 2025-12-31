@@ -5,7 +5,7 @@ import {useState, useEffect} from 'react';
 import styles from "./styles";
 import { supabase } from '../utils/supabase'
 
-interface Customer{
+export interface Customer{
   id: number;
   name: string;
   phone: string;
@@ -14,8 +14,9 @@ interface Customer{
 export default function CustomerList() {
   const router=useRouter();
   const [loading,setLoading] = useState(false);
-  const [searchString, setSearchString] = useState('');
   let [receivedData,setReceivedData] = useState<Customer[]>([]);
+  let [copyOfReceivedData, setCopyOfReceivedData] = useState<Customer[]>([]);
+
   
   useEffect(()=>{
     getCustomerList();
@@ -37,6 +38,7 @@ export default function CustomerList() {
             if (data) {
               setLoading(false);
               setReceivedData([...data]);
+              setCopyOfReceivedData([...data]);
               
             }
           } catch (error) {
@@ -47,37 +49,21 @@ export default function CustomerList() {
   
     }
           
-    async function handleSearch(){
-      if(searchString.length>0){
-        /*const { data, error, status } = await supabase
-        .from("customer_list")
-        .select("*")  
-        .contains("name", searchString);
-
-            if (error && status !== 406) {
-              console.log(error.message)
-            }
-      
-            if (data) {
-              setLoading(false);
-              setReceivedData([...data]);
-              
-            }
-              */
-        const copyOfReceivedData = [...receivedData];
-        let searchResult: Customer[] = [];
-        copyOfReceivedData.map((customer: Customer, index: number)=>{
-          
-          const nameIndex = customer.name.search(new RegExp(searchString, "i"));
-          const phoneIndex = customer.phone.search(new RegExp(searchString, "i"));
-          if(nameIndex || phoneIndex >=0)
-            searchResult.push(customer);
-        });
-        console.log(searchResult)
-        //searchResult.length>0 ? setReceivedData(searchResult): null;
-      }
+  function handleSearch(searchString: string){
+    if(searchString.length>0){
+      let searchResult: Customer[] = [];
+      copyOfReceivedData.map((customer: Customer, index: number)=>{  
+        const nameIndex = customer.name.search(new RegExp(searchString, "i"));
+        const phoneIndex = customer.phone.search(new RegExp(searchString, "i"));
         
-      } 
+        if(nameIndex!==-1 || phoneIndex !==-1)
+          searchResult.push(customer);
+      });
+      
+      searchResult.length>0 ? setReceivedData(searchResult): setReceivedData([]);
+    }
+      
+  } 
     
   
   
@@ -87,19 +73,18 @@ export default function CustomerList() {
         <View style={styles.verticallySpaced}>
           <Input
             leftIcon={{ type: 'font-awesome', name: 'search' }}
-            onChangeText={(text) => setSearchString(text)}
-            value={searchString}
+            onChangeText={(text) => text.length>0 ? handleSearch(text): setReceivedData(copyOfReceivedData)}
             placeholder="Search"
           />
-          <Button title="Search" onPress={handleSearch}></Button>
+          
         </View>
         
         <ScrollView>
           {
-            receivedData.map((customer: any, index: number)=>{
+            receivedData.map((customer: any)=>{
                 
                 return (
-                  <ListItem key={customer.id}  containerStyle={styles.listItem}>
+                  <ListItem key={customer.id}  containerStyle={styles.listItem} onPress={()=>router.push({pathname:"/customer-details", params: customer})}>
                     <ListItem.Content >
                       <ListItem.Title style={styles.text}>
                         {customer.name}

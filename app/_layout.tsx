@@ -33,6 +33,7 @@ export default function RootLayout() {
         <Stack.Screen name="dashboard" options={{headerTitle: "Dashboard"}}/>
         <Stack.Screen name="customer-list" options={{headerTitle: "Customer List"}}/>
         <Stack.Screen name="add-customer" options={{headerTitle: "Add Customer"}}/>
+        <Stack.Screen name="customer-details" options={{headerTitle: "Customer Details"}}/>
       </Stack>
     </DashboardContext.Provider>
   )
