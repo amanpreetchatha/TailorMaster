@@ -60,6 +60,9 @@ const styles = StyleSheet.create({
   },
   measurements:{
     width: 200
+  },
+  button:{
+    marginTop: 20
   }
 });
 
