@@ -68,6 +68,7 @@ export default function CustomerList() {
   
   
   return (
+    // add code to display a loading icon until getCustomerList() has fetched data from the database
     <View style={[styles.container, styles.mb20]}>
       
         <View style={styles.verticallySpaced}>
