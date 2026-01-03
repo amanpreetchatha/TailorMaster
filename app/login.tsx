@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Text, View, KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView, Text, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import styles from './styles';
 
+import { useRouter } from 'expo-router';
 import { Alert, AppState } from 'react-native';
 import { supabase } from './../utils/supabase';
-import {useRouter} from 'expo-router';
 
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {
@@ -31,6 +31,7 @@ const LoginForm = () =>{
         })
         
         if (error) Alert.alert(error.message)
+        else router.replace("/");
         setLoading(false)
       }
     

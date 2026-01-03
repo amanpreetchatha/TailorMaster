@@ -1,4 +1,5 @@
 
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
@@ -27,6 +28,7 @@ const RegisterForm = () =>{
         });
     
         if (error) Alert.alert(error.message)
+        else router.replace("/")
         setLoading(false);
       }
     
