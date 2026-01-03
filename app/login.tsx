@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, KeyboardAvoidingView } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import styles from './styles';
 
@@ -35,7 +35,8 @@ const LoginForm = () =>{
       }
     
     return (
-        <View style={styles.container}>
+
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <View style={[styles.verticallySpaced, styles.mt20]}>
                 <Text style={styles.heading}>Login</Text>
                 <Input
@@ -66,7 +67,7 @@ const LoginForm = () =>{
             </View>
             
             
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

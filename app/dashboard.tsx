@@ -22,7 +22,7 @@ export default function Dashboard() {
           <Button title="Customer List" onPress={()=>router.push('/customer-list')} />
         </View>
         <View style={styles.verticallySpaced}>
-          <Button title="Log Out" onPress={() => {supabase.auth.signOut(); router.push('/login')}} />
+          <Button title="Log Out" onPress={() => {supabase.auth.signOut(); router.replace('/login')}} />
         </View>
     </View>
   );

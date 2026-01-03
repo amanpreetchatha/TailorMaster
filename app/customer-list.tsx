@@ -1,9 +1,9 @@
 import { useRouter } from "expo-router";
-import { Pressable, View, Alert, ScrollView, FlatList } from "react-native";
-import {Tab, Text, Button, Input, ListItem} from "react-native-elements"
-import {useState, useEffect} from 'react';
+import { useEffect, useState } from 'react';
+import { ScrollView, View } from "react-native";
+import { Input, ListItem } from "react-native-elements";
+import { supabase } from '../utils/supabase';
 import styles from "./styles";
-import { supabase } from '../utils/supabase'
 
 export interface Customer{
   id: number;
@@ -64,8 +64,6 @@ export default function CustomerList() {
     }
       
   } 
-    
-  
   
   return (
     // add code to display a loading icon until getCustomerList() has fetched data from the database
@@ -101,6 +99,7 @@ export default function CustomerList() {
             
             
         </ScrollView>      
+
     </View>
     
   );

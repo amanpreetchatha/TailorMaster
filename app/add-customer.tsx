@@ -1,10 +1,11 @@
 import { supabase } from "@/utils/supabase";
 import { router } from "expo-router";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
-import { Button, CheckBox, Input, Text } from "react-native-elements";
+import { KeyboardAvoidingView, ScrollView, View } from "react-native";
+import { Button, CheckBox, Input } from "react-native-elements";
 import useUserContext from "./providers/context";
 import styles from "./styles";
+import { Alert } from "react-native";
 
 
 export default function AddCustomer(){
@@ -75,13 +76,12 @@ export default function AddCustomer(){
             <Input label="pending name here" /> 
         </View>
 
-    // don't store JSX in state — render based on selectedRadio
     const product = selectedRadio === 0 ? kurtaPajama : selectedRadio === 1 ? salwarSuit : pantShirt;
     
     function validateData(){
-        setMessage("");
+        
         if((name.length===0)||(note.length===0)){
-            setMessage("Name and Notes can't be empty");
+            Alert.alert("Name and Notes can't be empty");
         }
         else{
             const customerData={"name": name, "phone": phone, "note": note, "last_updated": new Date(), "measurement_type": "" ,"measurements": {} };
@@ -109,12 +109,12 @@ export default function AddCustomer(){
         .single()
         
         if (error && status !== 406) {
-            setMessage(error.message);
+            Alert.alert(error.message);
         }else
         if(error)     
-            setMessage(error.message)
+            Alert.alert(error.message)
         else
-            setMessage("Submitted!");
+            Alert.alert("Submitted!");
             setName('');
             setPhone('');
             setNote('');
@@ -129,7 +129,8 @@ export default function AddCustomer(){
 
 
     return (
-        <View>
+        <KeyboardAvoidingView behavior={"height"} style={styles.layout}>
+            <View style={styles.container}>
             <ScrollView>
                 <Input 
                     style={styles.inputField}
@@ -186,16 +187,17 @@ export default function AddCustomer(){
                     value={note}
                     onChangeText={(text)=>(setNote(text))}
                 />
-                <View style={styles.verticallySpaced}>
+                <View style={[styles.verticallySpaced,styles.mb20]}>
                     <Button title="Add" onPress={validateData}/>
                 </View>
-                <View style={styles.verticallySpaced}>
-                    <Button title="Cancel" onPress={()=>router.push("/")}/>
+                <View style={[styles.verticallySpaced,styles.mb20]}>
+                    <Button title="Cancel" onPress={()=>router.replace("/")}/>
                 </View>
-                <View style={styles.verticallySpaced}>
-                    <Text style={styles.text}>{ message }</Text>
+                <View style={[styles.verticallySpaced,styles.mb20]}>
+                
                 </View>
             </ScrollView>
-        </View>
+            </View>
+        </KeyboardAvoidingView>
     );
 }
