@@ -1,12 +1,9 @@
 import { useRouter } from "expo-router";
-import { View, Text, Alert } from "react-native";
+import { Text, View } from "react-native";
+import { Button } from 'react-native-elements';
+import { supabase } from './../utils/supabase';
+import useUserContext from "./providers/context";
 import styles from "./styles";
-import {Session} from '@supabase/supabase-js'
-import { Button} from 'react-native-elements'
-import { supabase } from './../utils/supabase'
-import {useEffect, useState} from 'react';
-import CustomerList from "./customer-list";
-import  useUserContext  from "./providers/context";
 
 export default function Dashboard() {
   const router=useRouter();
@@ -15,14 +12,14 @@ export default function Dashboard() {
   return (
     <View style={styles.container}>
         <Text style={[styles.welcome, styles.text]}>Welcome {user?.email}</Text>
-        <View style={styles.verticallySpaced}>
+        <View style={styles.mb20}>
           <Button title="Add Customer" onPress={()=>router.push('/add-customer')} />
         </View>
-        <View style={styles.verticallySpaced}>
+        <View style={styles.mb20}>
           <Button title="Customer List" onPress={()=>router.push('/customer-list')} />
         </View>
-        <View style={styles.verticallySpaced}>
-          <Button title="Log Out" onPress={() => {supabase.auth.signOut(); router.replace('/login')}} />
+        <View style={styles.mb20}>
+          <Button title="Log Out" onPress={() => {supabase.auth.signOut(); router.replace('/')}} />
         </View>
     </View>
   );

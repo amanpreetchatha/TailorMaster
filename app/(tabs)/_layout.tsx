@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
 import {Ionicons} from "@expo/vector-icons";
+
 export default function TabsLayout() {
   return (
     <Tabs screenOptions={{
@@ -22,10 +23,10 @@ export default function TabsLayout() {
                     name={focused ? "home-sharp" : "home-outline"}
                     color={color}
                     size={30} />;
-        },
-    }} 
-    />
-      <Tabs.Screen name="custdetails" options={{headerTitle: "Customer Details"}}/>
+              },
+          }} 
+      />
+      <Tabs.Screen name="customer-list" options={{headerTitle: "Customer List"}}/>
       
     </Tabs>
   )

@@ -48,9 +48,8 @@ export default function CustomerDetails(){
             .delete()
             .eq("id", customer.id)
             .select()
-            if (error && status !== 406) {
+            if (error && status !== 406)
               console.log(error.message)
-            }
             if (data)
             {
                 Alert.alert("Customer Deleted Successfully");
@@ -60,27 +59,26 @@ export default function CustomerDetails(){
             console.log(error.message)
         }
     }
+    
     async function updateCustomer(){
         try{
             setLoading(true);
+
+            /*
             const {data, error, status} = await supabase
             .from("customer_list")
-            .update(customer)
+            .update("")
             .eq("id", customer.id)
             //update cust name,phone,lastupdated, note, all measurements
 
-            if (error && status !== 406) {
+            if (error && status !== 406)
               console.log(error.message)
-            }
-      
+                  
             if (data) {
               setLoading(false);
               console.log(data);
-              
-
-
             }
-
+            */
 
         }catch(error: any){
             console.log(error.message)
