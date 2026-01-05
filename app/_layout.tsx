@@ -35,6 +35,7 @@ export default function RootLayout() {
         <Stack.Screen name="customer-list" options={{headerTitle: t("customer_list")}}/>
         <Stack.Screen name="add-customer" options={{headerTitle: t("add_customer")}}/>
         <Stack.Screen name="customer-details" options={{headerTitle: t("customer_detail")}}/>
+        
       </Stack>
     </DashboardContext.Provider>
   )

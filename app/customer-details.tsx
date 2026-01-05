@@ -90,7 +90,8 @@ export default function CustomerDetails(){
             <View style={styles.container}>
                 <ScrollView>
                     <Input label={t("name")} disabled={disabled} onChangeText={(text)=>customer.name=text}> {customer.name}</Input>
-                    <Input label={t("phone")} disabled={disabled}onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
+                    <Input label={t("phone")} disabled={disabled} onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
+                    <Input label={t("naapNumber")} disabled={disabled} onChangeText={(text)=>customer.naap_number=text}> {customer.naap_number}</Input>
                     <Text>{t("edit")}</Text>
                     <Switch style={{alignSelf: "flex-start"}} value={!disabled} onValueChange={()=>setDisabled(!disabled)} />
                     

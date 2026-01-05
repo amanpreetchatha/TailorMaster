@@ -12,6 +12,7 @@ export default function AddCustomer(){
     const user=useUserContext();
     const [name,setName]=useState("");
     const [phone,setPhone]=useState("");
+    const [naapNumber,setNaapNumber] = useState("");
     const [note,setNote]=useState("");
     const {t} = useTranslation();
     
@@ -89,11 +90,11 @@ export default function AddCustomer(){
     
     function validateData(){
         
-        if((name.length===0)||(note.length===0)){
-            Alert.alert(t("name_note_error"));
+        if(name.length===0){
+            Alert.alert(t("nameError"));
         }
         else{
-            const customerData={"name": name, "phone": phone, "note": note, "last_updated": new Date(), "measurement_type": "" ,"measurements": {} };
+            const customerData={"tailor_id": user?.id, "name": name, "phone": phone, "naap_number": naapNumber, "note": note, "last_updated": new Date(), "measurement_type": "" ,"measurements": {} };
             if(selectedRadio===0){
                 customerData.measurement_type = t("kudta_pajama");
                 customerData.measurements = kurtaPajamaMeasurements;
@@ -152,6 +153,12 @@ export default function AddCustomer(){
                     label={t("phone")}
                     value={phone}
                     onChangeText={(text)=>(setPhone(text))}
+                />
+                <Input 
+                    style={styles.inputField}
+                    label={t("naapNumber")}
+                    value={naapNumber}
+                    onChangeText={(text)=>(setNaapNumber(text))}
                 />
                 
                 <CheckBox

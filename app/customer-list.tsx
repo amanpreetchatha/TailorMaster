@@ -6,6 +6,7 @@ import { Input, ListItem } from "react-native-elements";
 import { supabase } from '../utils/supabase';
 import "./i18n";
 import styles from "./styles";
+import useUserContext from "./providers/context";
 
 export interface Customer{
   id: number;
@@ -14,6 +15,7 @@ export interface Customer{
 }
 
 export default function CustomerList() {
+  const user=useUserContext();
   const router=useRouter();
   const [loading,setLoading] = useState(false);
   let [receivedData,setReceivedData] = useState<Customer[]>([]);
@@ -31,6 +33,7 @@ export default function CustomerList() {
             const { data, error, status } = await supabase
             .from("customer_list")
             .select("*")
+            .eq("tailor_id",user?.id)
             
 
             if (error && status !== 406) {
