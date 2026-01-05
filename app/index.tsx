@@ -1,15 +1,12 @@
-import { View } from 'react-native'
-
-import LoginForm from './login'
-import Dashboard from './dashboard'
-import  useUserContext  from './providers/context'
-
-
+import { View } from 'react-native';
+import Dashboard from './dashboard';
+import LoginForm from './login';
+import useUserContext from './providers/context';
 
 
 export default function App() {
   const user=useUserContext();
-
+  
   return (
     
     <View>
@@ -19,4 +16,4 @@ export default function App() {
     </View>
   )
   
-}
+} 

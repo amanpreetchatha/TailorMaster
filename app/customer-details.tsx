@@ -1,10 +1,11 @@
 import { supabase } from "@/utils/supabase";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Alert, KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Button, Input, Switch, Text } from "react-native-elements";
+import "./i18n";
 import styles from "./styles";
-
 
 interface Measurements{
     lambai: string;
@@ -14,7 +15,7 @@ export default function CustomerDetails(){
     const [loading,setLoading] = useState(false);
     const [measurements, setMeasurements] = useState([])
     const [disabled,setDisabled] = useState(true);
-    
+    const {t} = useTranslation();
     useEffect(()=>{
         getData();
     },[]);
@@ -84,14 +85,13 @@ export default function CustomerDetails(){
             console.log(error.message)
         }
     }
-    
     return (
         <KeyboardAvoidingView behavior={"height"} style={styles.layout}>
             <View style={styles.container}>
                 <ScrollView>
-                    <Input label="Name" disabled={disabled} onChangeText={(text)=>customer.name=text}> {customer.name}</Input>
-                    <Input label="Phone" disabled={disabled}onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
-                    <Text style={styles.text}>Edit</Text>
+                    <Input label={t("name")} disabled={disabled} onChangeText={(text)=>customer.name=text}> {customer.name}</Input>
+                    <Input label={t("phone")} disabled={disabled}onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
+                    <Text>{t("edit")}</Text>
                     <Switch style={{alignSelf: "flex-start"}} value={!disabled} onValueChange={()=>setDisabled(!disabled)} />
                     
                     <Text style={styles.text}>{customer.measurement_type}</Text>
@@ -99,16 +99,16 @@ export default function CustomerDetails(){
                     
                     {
                         Object.entries(measurements).map((array,index)=>(
-                            <Input key={index} label={array[0]} disabled={disabled} > {array[1]}</Input>
+                            <Input key={index} label={t(array[0])} disabled={disabled} > {array[1]}</Input>
                         ))
                     }
-                    <Input label="Notes" disabled={disabled} onChangeText={(text)=>customer.note=text}> {customer.note}</Input>
+                    <Input label={t("note")} disabled={disabled} onChangeText={(text)=>customer.note=text}> {customer.note}</Input>
                     
                     <View style={[styles.verticallySpaced, styles.mb20]}>
-                        <Button title="Update"onPress={updateCustomer} />
+                        <Button title={t("update")} onPress={updateCustomer} />
                     </View>
                     <View style={[styles.verticallySpaced, styles.mb20]}>
-                        <Button title="Delete" onPress={deleteCustomer} disabled={false}/>
+                        <Button title={t("delete")} onPress={deleteCustomer} disabled={false}/>
                     </View>
                     <View style={styles.mb20}>
 

@@ -1,9 +1,11 @@
 
 import { router } from 'expo-router';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, View } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { supabase } from './../utils/supabase';
+import "./i18n";
 import styles from './styles';
 
 
@@ -13,6 +15,7 @@ const RegisterForm = () =>{
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const {t}=useTranslation();
 
 
     async function signUpWithEmail() {
@@ -36,36 +39,36 @@ const RegisterForm = () =>{
       <View style={styles.container}>
         <View style={[styles.verticallySpaced, styles.mt20]}>
           <Input
-            label="Full Name"
+            label={t("name")}
             leftIcon={{ type: 'font-awesome', name: 'user' }}
             onChangeText={(text) => setFullName(text)}
             value={fullName}
-            placeholder="Full Name"
+            
           />
         </View>
         <View style={[styles.verticallySpaced]}>
           <Input
-            label="Email"
+            label={t("email")}
             leftIcon={{ type: 'font-awesome', name: 'envelope' }}
             onChangeText={(text) => setEmail(text)}
             value={email}
-            placeholder="email@address.com"
+            
             autoCapitalize={'none'}
           />
         </View>
         <View style={styles.verticallySpaced}>
           <Input
-            label="Password"
+            label={t("password")}
             leftIcon={{ type: 'font-awesome', name: 'lock' }}
             onChangeText={(text) => setPassword(text)}
             value={password}
             secureTextEntry={true}
-            placeholder="Password"
+            
             autoCapitalize={'none'}
           />
         </View>
         <View style={[styles.verticallySpaced, styles.mt20]}>
-          <Button title="Register" disabled={loading} onPress={() => signUpWithEmail()} />
+          <Button title={t("register")} disabled={loading} onPress={() => signUpWithEmail()} />
         </View>
       </View>
         )

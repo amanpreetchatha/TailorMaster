@@ -1,8 +1,10 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from 'react';
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 import { Input, ListItem } from "react-native-elements";
 import { supabase } from '../utils/supabase';
+import "./i18n";
 import styles from "./styles";
 
 export interface Customer{
@@ -16,7 +18,7 @@ export default function CustomerList() {
   const [loading,setLoading] = useState(false);
   let [receivedData,setReceivedData] = useState<Customer[]>([]);
   let [copyOfReceivedData, setCopyOfReceivedData] = useState<Customer[]>([]);
-
+  const {t} = useTranslation();
   
   useEffect(()=>{
     getCustomerList();
@@ -73,7 +75,7 @@ export default function CustomerList() {
           <Input
             leftIcon={{ type: 'font-awesome', name: 'search' }}
             onChangeText={(text) => text.length>0 ? handleSearch(text): setReceivedData(copyOfReceivedData)}
-            placeholder="Search"
+            placeholder={t("search")}
           />
           
         </View>

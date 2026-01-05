@@ -1,18 +1,19 @@
 import { supabase } from "@/utils/supabase";
 import { router } from "expo-router";
 import { useState } from "react";
-import { KeyboardAvoidingView, ScrollView, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Alert, KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Button, CheckBox, Input } from "react-native-elements";
+import "./i18n";
 import useUserContext from "./providers/context";
 import styles from "./styles";
-import { Alert } from "react-native";
-
 
 export default function AddCustomer(){
     const user=useUserContext();
     const [name,setName]=useState("");
     const [phone,setPhone]=useState("");
     const [note,setNote]=useState("");
+    const {t} = useTranslation();
     
     const [message,setMessage] = useState("");
     const [selectedRadio, setSelectedRadio]=useState(0);
@@ -29,51 +30,59 @@ export default function AddCustomer(){
 
     const kurtaPajama =
         <View>
-            <Input label="Lambai" value={kurtaPajamaMeasurements.lambai ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, lambai: text}))}/>
-            <Input label="Ghera Kamar" value={kurtaPajamaMeasurements.gheraKamar ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, gheraKamar: text}))}/>
-            <Input label="Teera" value={kurtaPajamaMeasurements.teera ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, teera: text}))}/>
-            <Input label="Baah" value={kurtaPajamaMeasurements.baah ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, baah: text}))}/>
-            <Input label="Modha" value={kurtaPajamaMeasurements.modha ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, modha: text}))}/>
-            <Input label="Collar" value={kurtaPajamaMeasurements.collar ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, collar: text}))}/>
-            <Input label="Pajama Mori" value={kurtaPajamaMeasurements.pajamaMori ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, pajamaMori: text}))}/>
-            <Input label="Patt" value={kurtaPajamaMeasurements.patt ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, patt: text}))}/>
-            <Input label="Jholi" value={kurtaPajamaMeasurements.jholi ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, jholi: text}))}/>
+            <Input label={t("lambai")} value={kurtaPajamaMeasurements.lambai ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, lambai: text}))}/>
+            <Input label={t("ghera")} value={kurtaPajamaMeasurements.ghera ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, ghera: text}))}/>
+            <Input label={t("kamar")} value={kurtaPajamaMeasurements.kamar ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, kamar: text}))}/> 
+            <Input label={t("shati")} value={kurtaPajamaMeasurements.shati ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, shati: text}))}/>
+            <Input label={t("teera")} value={kurtaPajamaMeasurements.teera ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, teera: text}))}/>
+            <Input label={t("baah")} value={kurtaPajamaMeasurements.baah ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, baah: text}))}/>
+            <Input label={t("modha")} value={kurtaPajamaMeasurements.modha ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, modha: text}))}/>
+            <Input label={t("collar")} value={kurtaPajamaMeasurements.collar ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, collar: text}))}/>
+            <Input label={t("pajamaLambai")} value={kurtaPajamaMeasurements.pajamaLambai ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, pajamaLambai: text}))}/>
+            <Input label={t("mori")} value={kurtaPajamaMeasurements.mori ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, mori: text}))}/>
+            <Input label={t("patt")} value={kurtaPajamaMeasurements.patt ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, patt: text}))}/>
+            <Input label={t("jholi")} value={kurtaPajamaMeasurements.jholi ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, jholi: text}))}/>
+            
         </View>
     
 
     const salwarSuit =
         <View>
-            <Input label="Paloi" value={salwarSuitMeasurements.paloi ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, paloi: text}))}/>
-            <Input label="Lambai" value={salwarSuitMeasurements.lambai ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, lambai: text}))}/>
-            <Input label="Shati" value={salwarSuitMeasurements.shati ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, shati: text}))}/>
-            <Input label="Kamar" value={salwarSuitMeasurements.kamar ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, kamar: text}))}/>
-            <Input label="Hip" value={salwarSuitMeasurements.hip ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, hip: text}))}/>
-            <Input label="Ghera" value={salwarSuitMeasurements.ghera ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, ghera: text}))}/>
-            <Input label="pending name here" />
-            <Input label="Baah" value={salwarSuitMeasurements.baah ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, baah: text}))}/>
-            <Input label="Baah Mori" value={salwarSuitMeasurements.baahMori ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, baahMori: text}))}/>
-            <Input label="Modha" value={salwarSuitMeasurements.modha ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, modha: text}))}/>
-            <Input label="Gala F B" value={salwarSuitMeasurements.gala ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, gala: text}))}/>
-            <Input label="Salwar Mori" value={salwarSuitMeasurements.salwarMori ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, salwarMori: text}))}/>
-            <Input label="pending name here" />
-            <Input label="Fer" value={salwarSuitMeasurements.fer ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, fer: text}))}/>
+            <Input label={t("paloi")} value={salwarSuitMeasurements.paloi ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, paloi: text}))}/>
+            <Input label={t("jamperLambai")} value={salwarSuitMeasurements.jamperLambai ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, jamperLambai: text}))}/>
+            <Input label={t("shati")} value={salwarSuitMeasurements.shati ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, shati: text}))}/>
+            <Input label={t("kamar")} value={salwarSuitMeasurements.kamar ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, kamar: text}))}/>
+            <Input label={t("hip")} value={salwarSuitMeasurements.hip ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, hip: text}))}/>
+            <Input label={t("ghera")} value={salwarSuitMeasurements.ghera ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, ghera: text}))}/>
+            <Input label={t("chak")} value={salwarSuitMeasurements.chak ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, chak: text}))}/>
+            <Input label={t("teera")} value={salwarSuitMeasurements.teera ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, teera: text}))}/>
+            <Input label={t("baah")} value={salwarSuitMeasurements.baah ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, baah: text}))}/>
+            <Input label={t("baahMori")} value={salwarSuitMeasurements.baahMori ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, baahMori: text}))}/>
+            <Input label={t("modha")} value={salwarSuitMeasurements.modha ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, modha: text}))}/>
+            <Input label={t("gala")} value={salwarSuitMeasurements.gala ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, gala: text}))}/>
+            <Input label={t("salwarMori")} value={salwarSuitMeasurements.salwarMori ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, salwarMori: text}))}/>
+            <Input label={t("peti")} value={salwarSuitMeasurements.peti ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, peti: text}))}/>
+            <Input label={t("fer")} value={salwarSuitMeasurements.fer ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, fer: text}))}/>
         </View>
     
 
     const pantShirt =
         <View>
-            <Input label="Lambai" value={pantShirtMeasurements.lambai ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, lambai: text}))}/>
-            <Input label="Front Kamar" value={pantShirtMeasurements.frontKamar ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, frontKamar: text}))}/>
-            <Input label="Teera" value={pantShirtMeasurements.teera ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, teera: text}))}/> 
-            <Input label="Baah" value={pantShirtMeasurements.baah ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, baah: text}))}/>
-            <Input label="Modha" value={pantShirtMeasurements.modha ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, modha: text}))}/>
-            <Input label="Collar" value={pantShirtMeasurements.collar ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, collar: text}))}/>
-            <Input label="Pant Lambai" value={pantShirtMeasurements.pantLambai ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, pantLambai: text}))}/>
-            <Input label="Kamar" value={pantShirtMeasurements.kamar ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, kamar: text}))}/>
-            <Input label="Hip" value={pantShirtMeasurements.hip ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, hip: text}))}/>
-            <Input label="Patt" value={pantShirtMeasurements.patt ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, patt: text}))}/>
-            <Input label="Pant Mori" value={pantShirtMeasurements.pantMori ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, pantMori: text}))}/>
-            <Input label="pending name here" /> 
+            <Input label={t("lambai")} value={pantShirtMeasurements.lambai ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, lambai: text}))}/>
+           
+            <Input label={t("frontKamar")} value={pantShirtMeasurements.frontKamar ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, frontKamar: text}))}/>
+           
+            <Input label={t("teera")} value={pantShirtMeasurements.teera ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, teera: text}))}/> 
+            <Input label={t("baah")} value={pantShirtMeasurements.baah ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, baah: text}))}/>
+            <Input label={t("modha")} value={pantShirtMeasurements.modha ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, modha: text}))}/>
+            <Input label={t("cuff")} value={pantShirtMeasurements.cuff ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, cuff: text}))}/>
+            <Input label={t("collar")} value={pantShirtMeasurements.collar ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, collar: text}))}/>
+            <Input label={t("pantLambai")} value={pantShirtMeasurements.pantLambai ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, pantLambai: text}))}/>
+            <Input label={t("kamar")} value={pantShirtMeasurements.kamar ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, kamar: text}))}/>
+            <Input label={t("hip")} value={pantShirtMeasurements.hip ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, hip: text}))}/>
+            <Input label={t("patt")} value={pantShirtMeasurements.patt ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, patt: text}))}/>
+            <Input label={t("pantMori")} value={pantShirtMeasurements.pantMori ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, pantMori: text}))}/>
+            <Input label={t("gidri")} value={pantShirtMeasurements.gidri ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, gidri: text}))}/>
         </View>
 
     const product = selectedRadio === 0 ? kurtaPajama : selectedRadio === 1 ? salwarSuit : pantShirt;
@@ -81,20 +90,20 @@ export default function AddCustomer(){
     function validateData(){
         
         if((name.length===0)||(note.length===0)){
-            Alert.alert("Name and Notes can't be empty");
+            Alert.alert(t("name_note_error"));
         }
         else{
             const customerData={"name": name, "phone": phone, "note": note, "last_updated": new Date(), "measurement_type": "" ,"measurements": {} };
             if(selectedRadio===0){
-                customerData.measurement_type = "Kurta Pajama";
+                customerData.measurement_type = t("kudta_pajama");
                 customerData.measurements = kurtaPajamaMeasurements;
             }
             else if(selectedRadio===1){
-                customerData.measurement_type = "Salwar Suit";
+                customerData.measurement_type = t("salwar_suit");
                 customerData.measurements = salwarSuitMeasurements;
             }
             else if(selectedRadio===2){
-                customerData.measurement_type = "Pent Shirt";
+                customerData.measurement_type = t("pant_shirt");
                 customerData.measurements = pantShirtMeasurements;
             }
 
@@ -114,7 +123,7 @@ export default function AddCustomer(){
         if(error)     
             Alert.alert(error.message)
         else
-            Alert.alert("Submitted!");
+            Alert.alert(t("submitted"));
             setName('');
             setPhone('');
             setNote('');
@@ -134,20 +143,20 @@ export default function AddCustomer(){
             <ScrollView>
                 <Input 
                     style={styles.inputField}
-                    label="Name"
+                    label={t("name")}
                     value={name}
                     onChangeText={(text)=>(setName(text))}
                 />
                 <Input 
                     style={styles.inputField}
-                    label="Phone number"
+                    label={t("phone")}
                     value={phone}
                     onChangeText={(text)=>(setPhone(text))}
                 />
                 
                 <CheckBox
                     containerStyle={styles.checkBox}
-                    title={"Kurta Pajama"}
+                    title={t("kudta_pajama")}
                     checked={selectedRadio === 0}
                     onPress={() => {
                         resetAllFields();
@@ -158,7 +167,7 @@ export default function AddCustomer(){
                 />
                 <CheckBox
                     containerStyle={styles.checkBox}
-                    title={"Salwar Suit"}
+                    title={t("salwar_suit")}
                     checked={selectedRadio === 1}
                     onPress={() => {
                         resetAllFields();
@@ -169,7 +178,7 @@ export default function AddCustomer(){
                 />
                 <CheckBox
                     containerStyle={styles.checkBox}
-                    title={"Pent Shirt"}
+                    title={t("pant_shirt")}
                     checked={selectedRadio === 2}
                     onPress={() => {
                         resetAllFields();
@@ -183,15 +192,15 @@ export default function AddCustomer(){
 
                 <Input 
                     style={styles.inputField}
-                    label="Notes"
+                    label={t("note")}
                     value={note}
                     onChangeText={(text)=>(setNote(text))}
                 />
                 <View style={[styles.verticallySpaced,styles.mb20]}>
-                    <Button title="Add" onPress={validateData}/>
+                    <Button title={t("add")} onPress={validateData}/>
                 </View>
                 <View style={[styles.verticallySpaced,styles.mb20]}>
-                    <Button title="Cancel" onPress={()=>router.replace("/")}/>
+                    <Button title={t("cancel")} onPress={()=>router.replace("/")}/>
                 </View>
                 <View style={[styles.verticallySpaced,styles.mb20]}>
                 

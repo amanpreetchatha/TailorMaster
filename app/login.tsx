@@ -4,8 +4,11 @@ import { Button, Input } from 'react-native-elements';
 import styles from './styles';
 
 import { useRouter } from 'expo-router';
+
 import { Alert, AppState } from 'react-native';
 import { supabase } from './../utils/supabase';
+import "./i18n";
+import { useTranslation } from 'react-i18next';
 
 AppState.addEventListener('change', (state) => {
   if (state === 'active') {
@@ -21,7 +24,7 @@ const LoginForm = () =>{
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false);
     const router = useRouter();
-    
+    const {t}=useTranslation();
     
     async function signInWithEmail() {
         setLoading(true)
@@ -39,32 +42,30 @@ const LoginForm = () =>{
 
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
             <View style={[styles.verticallySpaced, styles.mt20]}>
-                <Text style={styles.heading}>Login</Text>
+                <Text style={styles.heading}>{t("login")}</Text>
                 <Input
-                    label="Email"
+                    label={t("email")}
                     leftIcon={{ type: 'font-awesome', name: 'envelope' }}
                     onChangeText={(text) => setEmail(text)}
                     value={email}
-                    placeholder="email@address.com"
                     autoCapitalize={'none'}
                 />
             </View>
             <View style={styles.verticallySpaced}>
                 <Input
-                    label="Password"
+                    label={t("password")}
                     leftIcon={{ type: 'font-awesome', name: 'lock' }}
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     secureTextEntry={true}
-                    placeholder="Password"
                     autoCapitalize={'none'}
                 />
             </View>
             <View style={[styles.verticallySpaced, styles.mt20]}>
-                <Button title= "Login" onPress={()=>signInWithEmail()} disabled={loading}/>
+                <Button title={t("login")} onPress={()=>signInWithEmail()} disabled={loading}/>
             </View>
             <View style={[styles.verticallySpaced, styles.mt20]}>
-                <Button title= "Register" onPress={()=>router.push("/register")}/>
+                <Button title={t("register")} onPress={()=>router.push("/register")}/>
             </View>
             
             
