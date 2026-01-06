@@ -1,0 +1,15 @@
+release{
+            storeFile file('tailor-master.keystore')
+            storePassword 'jimmyy'
+            keyAlias 'tm-key'
+            keyPassword 'jimmyy'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // Caution! In production, you need to generate your own keystore file.
+            // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.release
