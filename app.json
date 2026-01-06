@@ -21,7 +21,8 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.amanchatha.Tailor_Master"
+      "package": "com.amanchatha.TailorMaster",
+      "versionCode": 1
     },
     "web": {
       "output": "static",
