@@ -3,7 +3,7 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, KeyboardAvoidingView, ScrollView, View } from "react-native";
-import { Button, CheckBox, Input } from "react-native-elements";
+import { Button, CheckBox, Input, Switch, Text } from "react-native-elements";
 import "./i18n";
 import useUserContext from "./providers/context";
 import styles from "./styles";
@@ -15,6 +15,7 @@ export default function AddCustomer(){
     const [naapNumber,setNaapNumber] = useState("");
     const [note,setNote]=useState("");
     const {t} = useTranslation();
+    const [toggleSwitch, setToggleSwitch]=useState(false);
     
     const [message,setMessage] = useState("");
     const [selectedRadio, setSelectedRadio]=useState(0);
@@ -43,7 +44,7 @@ export default function AddCustomer(){
             <Input label={t("mori")} value={kurtaPajamaMeasurements.mori ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, mori: text}))}/>
             <Input label={t("patt")} value={kurtaPajamaMeasurements.patt ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, patt: text}))}/>
             <Input label={t("jholi")} value={kurtaPajamaMeasurements.jholi ?? ''} onChangeText={(text)=>setKurtaPajamaMeasurements(prev=>({...prev, jholi: text}))}/>
-            
+            <Input style={styles.inputField} label={t("note")} value={note} onChangeText={(text)=>(setNote(text))} />
         </View>
     
 
@@ -64,6 +65,7 @@ export default function AddCustomer(){
             <Input label={t("salwarMori")} value={salwarSuitMeasurements.salwarMori ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, salwarMori: text}))}/>
             <Input label={t("peti")} value={salwarSuitMeasurements.peti ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, peti: text}))}/>
             <Input label={t("fer")} value={salwarSuitMeasurements.fer ?? ''} onChangeText={(text)=>setSalwarSuitMeasurements(prev=>({...prev, fer: text}))}/>
+            <Input style={styles.inputField} label={t("note")} value={note} onChangeText={(text)=>(setNote(text))} />
         </View>
     
 
@@ -84,9 +86,10 @@ export default function AddCustomer(){
             <Input label={t("patt")} value={pantShirtMeasurements.patt ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, patt: text}))}/>
             <Input label={t("pantMori")} value={pantShirtMeasurements.pantMori ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, pantMori: text}))}/>
             <Input label={t("gidri")} value={pantShirtMeasurements.gidri ?? ''} onChangeText={(text)=>setPantShirtMeasurements(prev=>({...prev, gidri: text}))}/>
+            <Input style={styles.inputField} label={t("note")} value={note} onChangeText={(text)=>(setNote(text))} />
         </View>
 
-    const product = selectedRadio === 0 ? kurtaPajama : selectedRadio === 1 ? salwarSuit : pantShirt;
+    const product = selectedRadio === 0 ? kurtaPajama : selectedRadio === 1 ? salwarSuit : selectedRadio===2 ? pantShirt : null ;
     
     function validateData(){
         
@@ -106,8 +109,10 @@ export default function AddCustomer(){
             else if(selectedRadio===2){
                 customerData.measurement_type = t("pant_shirt");
                 customerData.measurements = pantShirtMeasurements;
+            }else if(selectedRadio===3){
+                customerData.measurement_type = t("other");
+                customerData.measurements = {};  //change this line
             }
-
             dbInsert(customerData); 
         }
     }
@@ -150,17 +155,16 @@ export default function AddCustomer(){
                 />
                 <Input 
                     style={styles.inputField}
-                    label={t("phone")}
-                    value={phone}
-                    onChangeText={(text)=>(setPhone(text))}
-                />
-                <Input 
-                    style={styles.inputField}
                     label={t("naapNumber")}
                     value={naapNumber}
                     onChangeText={(text)=>(setNaapNumber(text))}
                 />
-                
+                <Input 
+                    style={styles.inputField}
+                    label={t("phone")}
+                    value={phone}
+                    onChangeText={(text)=>(setPhone(text))}
+                />
                 <CheckBox
                     containerStyle={styles.checkBox}
                     title={t("kudta_pajama")}
@@ -194,15 +198,27 @@ export default function AddCustomer(){
                     checkedIcon="dot-circle-o"
                     uncheckedIcon="circle-o"
                 />
-                {product}
+                <CheckBox
+                    containerStyle={styles.checkBox}
+                    title={t("other")}
+                    checked={selectedRadio === 3}
+                    onPress={() => {
+                        resetAllFields();
+                        setSelectedRadio(3);
+                    }}
+                    checkedIcon="dot-circle-o"
+                    uncheckedIcon="circle-o"
+                />
+                <View  style={{alignSelf: "center"}}>
+                    <Text>{t("addMeasurements")}</Text>
+                    <Switch value={toggleSwitch} onValueChange={()=>setToggleSwitch(!toggleSwitch)} />
+                </View>
+                {
+                    toggleSwitch ? product : null
+                }
                 
 
-                <Input 
-                    style={styles.inputField}
-                    label={t("note")}
-                    value={note}
-                    onChangeText={(text)=>(setNote(text))}
-                />
+                
                 <View style={[styles.verticallySpaced,styles.mb20]}>
                     <Button title={t("add")} onPress={validateData}/>
                 </View>

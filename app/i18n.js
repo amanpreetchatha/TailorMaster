@@ -6,7 +6,7 @@ i18n
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-        debug: true,
+        debug: false,
         fallbackLng: "en",
         interpolation: {
             escapeValue: false,
@@ -71,6 +71,9 @@ i18n
                     nameError: "Name can't be empty",
                     submitted: "Details has been added to the list successfully",
                     naapNumber: "Naap Number",
+                    other: "Other",
+                    addMeasurements: "Add measurements",
+                    deleteCustomer: "Customer deleted successfully"
                 }
             },
             pa: {
@@ -130,7 +133,10 @@ i18n
                     gidri: "ਗਿਦੜੀ",
                     nameError: "ਨਾਮ ਖਾਲੀ ਨਹੀਂ ਹੋ ਸਕਦਾ!",
                     submitted: "ਵੇਰਵੇ ਨੂੰ ਸੂਚੀ ਵਿੱਚ ਸਫਲਤਾ-ਪੂਰਵਕ ਦਰਜ ਕੀਤਾ ਗਿਆ ਹੈ।",
-                    naapNumber: "ਨਾਪ ਨੰਬਰ"
+                    naapNumber: "ਨਾਪ ਨੰਬਰ",
+                    other: "ਹੋਰ",
+                    addMeasurements: "ਨਾਪ ਦਰਜ ਕਰੋ",
+                    deleteCustomer: "ਗਾਹਕ ਨੂੰ ਸਫਲਤਾ-ਪੂਰਵਕ ਮਿਟਾਇਆ ਗਿਆ"
                 }
             }
         }})

@@ -53,7 +53,7 @@ export default function CustomerDetails(){
               console.log(error.message)
             if (data)
             {
-                Alert.alert("Customer Deleted Successfully");
+                Alert.alert(t("deleteCustomer"));
                 router.replace("/customer-list");
             }
         }catch(error: any){
@@ -90,8 +90,9 @@ export default function CustomerDetails(){
             <View style={styles.container}>
                 <ScrollView>
                     <Input label={t("name")} disabled={disabled} onChangeText={(text)=>customer.name=text}> {customer.name}</Input>
-                    <Input label={t("phone")} disabled={disabled} onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
                     <Input label={t("naapNumber")} disabled={disabled} onChangeText={(text)=>customer.naap_number=text}> {customer.naap_number}</Input>
+                    <Input label={t("phone")} disabled={disabled} onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
+                    
                     <Text>{t("edit")}</Text>
                     <Switch style={{alignSelf: "flex-start"}} value={!disabled} onValueChange={()=>setDisabled(!disabled)} />
                     
@@ -105,9 +106,6 @@ export default function CustomerDetails(){
                     }
                     <Input label={t("note")} disabled={disabled} onChangeText={(text)=>customer.note=text}> {customer.note}</Input>
                     
-                    <View style={[styles.verticallySpaced, styles.mb20]}>
-                        <Button title={t("update")} onPress={updateCustomer} />
-                    </View>
                     <View style={[styles.verticallySpaced, styles.mb20]}>
                         <Button title={t("delete")} onPress={deleteCustomer} disabled={false}/>
                     </View>
