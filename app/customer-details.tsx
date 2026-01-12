@@ -110,7 +110,7 @@ export default function CustomerDetails(){
                         <Button title={t("delete")} onPress={deleteCustomer} />
                     </View>
                     <View style={styles.mb20}>
-
+                        
                     </View>
                 </ScrollView>
             </View>
