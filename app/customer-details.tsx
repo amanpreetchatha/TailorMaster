@@ -14,7 +14,7 @@ export default function CustomerDetails(){
     let customer = useLocalSearchParams();
     const [loading,setLoading] = useState(false);
     const [measurements, setMeasurements] = useState([])
-    const [disabled,setDisabled] = useState(true);
+    const [disabled,setDisabled] = useState(false);
     const {t} = useTranslation();
     useEffect(()=>{
         getData();
@@ -89,25 +89,25 @@ export default function CustomerDetails(){
         <KeyboardAvoidingView behavior={"height"} style={styles.layout}>
             <View style={styles.container}>
                 <ScrollView>
-                    <Input label={t("name")} disabled={disabled} onChangeText={(text)=>customer.name=text}> {customer.name}</Input>
-                    <Input label={t("naapNumber")} disabled={disabled} onChangeText={(text)=>customer.naap_number=text}> {customer.naap_number}</Input>
-                    <Input label={t("phone")} disabled={disabled} onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
+                    <Input label={t("name")} editable={disabled} onChangeText={(text)=>customer.name=text}> {customer.name}</Input>
+                    <Input label={t("naapNumber")} editable={disabled} onChangeText={(text)=>customer.naap_number=text}> {customer.naap_number}</Input>
+                    <Input label={t("phone")} editable={disabled} onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
                     
                     <Text>{t("edit")}</Text>
-                    <Switch style={{alignSelf: "flex-start"}} value={!disabled} onValueChange={()=>setDisabled(!disabled)} />
+                    <Switch style={{alignSelf: "flex-start"}} value={disabled} onValueChange={()=>setDisabled(!disabled)} />
                     
                     <Text style={styles.text}>{customer.measurement_type}</Text>
                     <Text style={[styles.text, styles.mb20]}>Last updated: {customer.last_updated}</Text>
                     
                     {
                         Object.entries(measurements).map((array,index)=>(
-                            <Input key={index} label={t(array[0])} disabled={disabled} > {array[1]}</Input>
+                            <Input key={index} label={t(array[0])} editable={disabled} > {array[1]}</Input>
                         ))
                     }
-                    <Input label={t("note")} disabled={disabled} onChangeText={(text)=>customer.note=text}> {customer.note}</Input>
+                    <Input label={t("note")} editable={disabled} onChangeText={(text)=>customer.note=text}> {customer.note}</Input>
                     
                     <View style={[styles.verticallySpaced, styles.mb20]}>
-                        <Button title={t("delete")} onPress={deleteCustomer} disabled={false}/>
+                        <Button title={t("delete")} onPress={deleteCustomer} />
                     </View>
                     <View style={styles.mb20}>
 
