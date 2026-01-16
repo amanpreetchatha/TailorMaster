@@ -1,9 +1,13 @@
 import {create} from "zustand";
 
-type UserPreferenceStore = {
-    kpmOrder: number;
+type UserStore = {
+    kpmOrder: string[];
+    setKpmOrder: () => void;
 };
 
-export const useUserStore = create<UserPreferenceStore>((set)=>({
-    kpmOrder: 1,
+export const useUserStore = create<UserStore>((set)=>({
+    kpmOrder: ["",""],
+    setKpmOrder: ()=> {
+        set({kpmOrder: []})
+    },
 }));
