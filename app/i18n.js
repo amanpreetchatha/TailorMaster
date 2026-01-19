@@ -73,7 +73,8 @@ i18n
                     naapNumber: "Naap Number",
                     other: "Other",
                     addMeasurements: "Add measurements",
-                    deleteCustomer: "Customer deleted successfully"
+                    deleteCustomer: "Customer deleted successfully",
+                    update: "Update",
                 }
             },
             pa: {
@@ -136,7 +137,8 @@ i18n
                     naapNumber: "ਨਾਪ ਨੰਬਰ",
                     other: "ਹੋਰ",
                     addMeasurements: "ਨਾਪ ਦਰਜ ਕਰੋ",
-                    deleteCustomer: "ਗਾਹਕ ਨੂੰ ਸਫਲਤਾ-ਪੂਰਵਕ ਮਿਟਾਇਆ ਗਿਆ"
+                    deleteCustomer: "ਗਾਹਕ ਨੂੰ ਸਫਲਤਾ-ਪੂਰਵਕ ਮਿਟਾਇਆ ਗਿਆ",
+                    update: "ਸੋਧ ਕਰੋ"
                 }
             }
         }})

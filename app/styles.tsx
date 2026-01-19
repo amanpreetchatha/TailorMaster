@@ -19,8 +19,6 @@ const styles = StyleSheet.create({
     color: "#333"
   },
   inputField: {
-    borderColor: "#000",
-    borderWidth: 5,
     margin: 10,
     padding: 10,
     fontWeight: 500,
@@ -67,7 +65,7 @@ const styles = StyleSheet.create({
     width: 200
   },
   button:{
-    marginTop: 20
+    marginTop: 20,
   },
   
 });

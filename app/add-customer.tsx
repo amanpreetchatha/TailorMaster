@@ -220,10 +220,10 @@ export default function AddCustomer(){
 
                 
                 <View style={[styles.verticallySpaced,styles.mb20]}>
-                    <Button title={t("add")} onPress={validateData}/>
+                    <Button style={styles.button} title={t("add")} onPress={validateData}/>
                 </View>
                 <View style={[styles.verticallySpaced,styles.mb20]}>
-                    <Button title={t("cancel")} onPress={()=>router.replace("/")}/>
+                    <Button style={styles.button} title={t("cancel")} onPress={()=>router.replace("/")}/>
                 </View>
                 <View style={[styles.verticallySpaced,styles.mb20]}>
                 

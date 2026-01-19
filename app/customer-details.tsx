@@ -16,6 +16,7 @@ export default function CustomerDetails(){
     const [measurements, setMeasurements] = useState([])
     const [disabled,setDisabled] = useState(false);
     const {t} = useTranslation();
+    let [updatedMeasurements, setUpdatedMeasurements] = useState([]);
     useEffect(()=>{
         getData();
     },[]);
@@ -65,10 +66,17 @@ export default function CustomerDetails(){
         try{
             setLoading(true);
 
-            /*
+            
             const {data, error, status} = await supabase
             .from("customer_list")
-            .update("")
+            .update({
+                name: customer.name,
+                naap_number: customer.naap_number,
+                phone: customer.phone,
+                note: customer.note,
+                last_updated: new Date(),
+                measurements: measurements
+            })
             .eq("id", customer.id)
             //update cust name,phone,lastupdated, note, all measurements
 
@@ -79,7 +87,7 @@ export default function CustomerDetails(){
               setLoading(false);
               console.log(data);
             }
-            */
+            
 
         }catch(error: any){
             console.log(error.message)
@@ -93,21 +101,30 @@ export default function CustomerDetails(){
                     <Input label={t("naapNumber")} editable={disabled} onChangeText={(text)=>customer.naap_number=text}> {customer.naap_number}</Input>
                     <Input label={t("phone")} editable={disabled} onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
                     
-                    <Text>{t("edit")}</Text>
+                    <Text>{t("update")}</Text>
                     <Switch style={{alignSelf: "flex-start"}} value={disabled} onValueChange={()=>setDisabled(!disabled)} />
                     
-                    <Text style={styles.text}>{customer.measurement_type}</Text>
-                    <Text style={[styles.text, styles.mb20]}>Last updated: {customer.last_updated}</Text>
+                    <Text>{customer.measurement_type}</Text>
+                    <Text style={[ styles.mb20]}>{t("last_updated")} : {customer.last_updated}</Text>
                     
                     {
                         Object.entries(measurements).map((array,index)=>(
-                            <Input key={index} label={t(array[0])} editable={disabled} > {array[1]}</Input>
+                            //implement editing values here
+                            <Input key={index} label={t(array[0])} editable={disabled} onChangeText={(text)=> null}> {array[1]}</Input> 
+
                         ))
                     }
                     <Input label={t("note")} editable={disabled} onChangeText={(text)=>customer.note=text}> {customer.note}</Input>
                     
+                    {
+                        disabled && (
+                            <View style={[styles.verticallySpaced, styles.mb20]}>
+                                <Button style={styles.button} title={t("update")} onPress={updateCustomer}  />
+                            </View>
+                        )
+                    }   
                     <View style={[styles.verticallySpaced, styles.mb20]}>
-                        <Button title={t("delete")} onPress={deleteCustomer} />
+                        <Button style={styles.button} title={t("delete")} onPress={deleteCustomer} />
                     </View>
                     <View style={styles.mb20}>
 
