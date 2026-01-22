@@ -1,5 +1,5 @@
 import { supabase } from "@/utils/supabase";
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, KeyboardAvoidingView, ScrollView, View } from "react-native";
@@ -12,11 +12,14 @@ interface Measurements{
 }
 export default function CustomerDetails(){
     let customer = useLocalSearchParams();
+    const [name,setName]=useState("");
+    const [naap_number,setNaap_number]=useState("");
+    const [phone,setPhone]=useState("");
+    const [note, setNote] = useState("");
     const [loading,setLoading] = useState(false);
-    const [measurements, setMeasurements] = useState([])
+    const [measurements, setMeasurements] = useState<Record<string,string>>({})
     const [disabled,setDisabled] = useState(false);
     const {t} = useTranslation();
-    let [updatedMeasurements, setUpdatedMeasurements] = useState([]);
     useEffect(()=>{
         getData();
     },[]);
@@ -34,7 +37,7 @@ export default function CustomerDetails(){
       
             if (data) {
               setLoading(false);
-              setMeasurements(data[0].measurements);
+              setMeasurements(data[0].measurements || {});
             }
 
 
@@ -55,7 +58,7 @@ export default function CustomerDetails(){
             if (data)
             {
                 Alert.alert(t("deleteCustomer"));
-                router.replace("/customer-list");
+                
             }
         }catch(error: any){
             console.log(error.message)
@@ -67,7 +70,7 @@ export default function CustomerDetails(){
             setLoading(true);
 
             
-            const {data, error, status} = await supabase
+            const {data, error} = await supabase
             .from("customer_list")
             .update({
                 name: customer.name,
@@ -80,15 +83,11 @@ export default function CustomerDetails(){
             .eq("id", customer.id)
             //update cust name,phone,lastupdated, note, all measurements
 
-            if (error && status !== 406)
+            if (error)
               console.log(error.message)
                   
-            if (data) {
-              setLoading(false);
-              console.log(data);
-            }
-            
-
+            setLoading(false);
+            Alert.alert(t("updateSuccess"));
         }catch(error: any){
             console.log(error.message)
         }
@@ -97,9 +96,9 @@ export default function CustomerDetails(){
         <KeyboardAvoidingView behavior={"height"} style={styles.layout}>
             <View style={styles.container}>
                 <ScrollView>
-                    <Input label={t("name")} editable={disabled} onChangeText={(text)=>customer.name=text}> {customer.name}</Input>
-                    <Input label={t("naapNumber")} editable={disabled} onChangeText={(text)=>customer.naap_number=text}> {customer.naap_number}</Input>
-                    <Input label={t("phone")} editable={disabled} onChangeText={(text)=>customer.phone=text}> {customer.phone}</Input>
+                    <Input label={t("name")} editable={disabled} onChangeText={(text)=>setName(text)}> {customer.name}</Input>
+                    <Input label={t("naapNumber")} editable={disabled} onChangeText={(text)=>setNaap_number(text)}> {customer.naap_number}</Input>
+                    <Input label={t("phone")} editable={disabled} onChangeText={(text)=>setPhone(text)}> {customer.phone}</Input>
                     
                     <Text>{t("update")}</Text>
                     <Switch style={{alignSelf: "flex-start"}} value={disabled} onValueChange={()=>setDisabled(!disabled)} />
@@ -108,13 +107,20 @@ export default function CustomerDetails(){
                     <Text style={[ styles.mb20]}>{t("last_updated")} : {customer.last_updated}</Text>
                     
                     {
-                        Object.entries(measurements).map((array,index)=>(
-                            //implement editing values here
-                            <Input key={index} label={t(array[0])} editable={disabled} onChangeText={(text)=> null}> {array[1]}</Input> 
-
+                        Object.entries(measurements || {}).map(([key, val], index) => (
+                            <Input
+                                key={key + index}
+                                label={t(key)}
+                                value={String(val ?? "")}
+                                editable={disabled}
+                                onChangeText={(text) =>
+                                    setMeasurements((prev) => ({ ...prev, [key]: text }))
+                                }
+                            />
                         ))
+                        
                     }
-                    <Input label={t("note")} editable={disabled} onChangeText={(text)=>customer.note=text}> {customer.note}</Input>
+                    <Input label={t("note")} editable={disabled} onChangeText={(text)=>setNote(text)}> {customer.note}</Input>
                     
                     {
                         disabled && (
@@ -127,7 +133,7 @@ export default function CustomerDetails(){
                         <Button style={styles.button} title={t("delete")} onPress={deleteCustomer} />
                     </View>
                     <View style={styles.mb20}>
-
+                    
                     </View>
                 </ScrollView>
             </View>
