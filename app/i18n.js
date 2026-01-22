@@ -75,6 +75,7 @@ i18n
                     addMeasurements: "Add measurements",
                     deleteCustomer: "Customer deleted successfully",
                     update: "Update",
+                    totalCount: "Count",
                 }
             },
             pa: {
@@ -138,7 +139,8 @@ i18n
                     other: "ਹੋਰ",
                     addMeasurements: "ਨਾਪ ਦਰਜ ਕਰੋ",
                     deleteCustomer: "ਗਾਹਕ ਨੂੰ ਸਫਲਤਾ-ਪੂਰਵਕ ਮਿਟਾਇਆ ਗਿਆ",
-                    update: "ਸੋਧ ਕਰੋ"
+                    update: "ਸੋਧ ਕਰੋ",
+                    totalCount: "ਕੁਲ ਗਿਣਤੀ"
                 }
             }
         }})

@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { useEffect, useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
-import { Input, ListItem } from "react-native-elements";
+import { Input, ListItem, Text } from "react-native-elements";
 import { supabase } from '../utils/supabase';
 import "./i18n";
 import styles from "./styles";
@@ -80,7 +80,7 @@ export default function CustomerList() {
             onChangeText={(text) => text.length>0 ? handleSearch(text): setReceivedData(copyOfReceivedData)}
             placeholder={t("search")}
           />
-          
+          <Text>{t("totalCount")}:  {receivedData.length}</Text>
         </View>
         
         <ScrollView>
