@@ -28,19 +28,20 @@ export default function CustomerDetails(){
             setLoading(true);
             const {data, error, status} = await supabase
             .from("customer_list")
-            .select("measurements")
+            .select("*")
             .eq("id", customer.id)
 
             if (error && status !== 406) {
               console.log(error.message)
             }
-      
             if (data) {
               setLoading(false);
+              setName(data[0].name);
+              setNaap_number(data[0].naap_number);
+              setPhone(data[0].phone);
+              setNote(data[0].note);
               setMeasurements(data[0].measurements || {});
             }
-
-
         }catch(error: any){
             console.log(error.message)
         }
@@ -73,10 +74,10 @@ export default function CustomerDetails(){
             const {data, error} = await supabase
             .from("customer_list")
             .update({
-                name: customer.name,
-                naap_number: customer.naap_number,
-                phone: customer.phone,
-                note: customer.note,
+                name: name,
+                naap_number: naap_number,
+                phone: phone,
+                note: note,
                 last_updated: new Date(),
                 measurements: measurements
             })
@@ -96,9 +97,9 @@ export default function CustomerDetails(){
         <KeyboardAvoidingView behavior={"height"} style={styles.layout}>
             <View style={styles.container}>
                 <ScrollView>
-                    <Input label={t("name")} editable={disabled} onChangeText={(text)=>setName(text)}> {customer.name}</Input>
-                    <Input label={t("naapNumber")} editable={disabled} onChangeText={(text)=>setNaap_number(text)}> {customer.naap_number}</Input>
-                    <Input label={t("phone")} editable={disabled} onChangeText={(text)=>setPhone(text)}> {customer.phone}</Input>
+                    <Input label={t("name")} editable={disabled} onChangeText={(text)=>setName(text)}> {name}</Input>
+                    <Input label={t("naapNumber")} editable={disabled} onChangeText={(text)=>setNaap_number(text)}> {naap_number}</Input>
+                    <Input label={t("phone")} editable={disabled} onChangeText={(text)=>setPhone(text)}> {phone}</Input>
                     
                     <Text>{t("update")}</Text>
                     <Switch style={{alignSelf: "flex-start"}} value={disabled} onValueChange={()=>setDisabled(!disabled)} />
@@ -120,7 +121,7 @@ export default function CustomerDetails(){
                         ))
                         
                     }
-                    <Input label={t("note")} editable={disabled} onChangeText={(text)=>setNote(text)}> {customer.note}</Input>
+                    <Input label={t("note")} editable={disabled} onChangeText={(text)=>setNote(text)}> {note}</Input>
                     
                     {
                         disabled && (
